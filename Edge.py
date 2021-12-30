@@ -6,5 +6,5 @@ from dataclasses import dataclass
 class Edge:
     index: int
     label: str
-    vertex_start_index: int
-    vertex_end_index: int
+    vertex_from_index: int
+    vertex_to_index: int

@@ -1,11 +1,10 @@
-from abc import ABC, abstractmethod
 from typing import *
 from Graph import *
+from Production import *
 from Vertex import *
 
 
-class Production (ABC):
+class P1 (Production):
     @staticmethod
-    @abstractmethod
     def apply(vertices: List[Vertex], graph: Graph):
-        raise NotImplementedError
+        graph.add_edge('d', vertices[0], graph.add_vertex('F'))
