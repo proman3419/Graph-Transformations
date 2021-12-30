@@ -1,6 +1,7 @@
-from typing import *
 from abc import ABC, abstractmethod
+from typing import *
 from Graph import *
+from Vertex import *
 
 
 class Production (ABC):
@@ -8,5 +9,5 @@ class Production (ABC):
         pass
 
     @abstractmethod
-    def apply(self, vertices: List[Vertex]):
+    def apply(self, vertices: List[Vertex], graph: Graph):
         raise NotImplementedError
