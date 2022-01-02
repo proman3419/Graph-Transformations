@@ -1,7 +1,7 @@
-from typing import *
-from Graph import *
-from Production import *
-from Vertex import *
+from typing import List
+from Graph import Graph
+from Production import Production
+from Vertex import Vertex
 
 
 class P1 (Production):
