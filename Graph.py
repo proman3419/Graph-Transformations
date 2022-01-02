@@ -1,7 +1,6 @@
-from typing import *
 from itertools import count
-from Vertex import *
-from Edge import *
+from Vertex import Vertex
+from Edge import Edge
 
 
 class Graph:

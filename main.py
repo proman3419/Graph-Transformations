@@ -1,7 +1,7 @@
-from Graph import *
-from P1 import *
-from P2 import *
-from P3 import *
+from Graph import Graph
+from P1 import P1
+from P2 import P2
+from P3 import P3
 
 
 if __name__ == '__main__':

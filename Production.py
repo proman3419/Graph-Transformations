@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import *
-from Graph import *
-from Vertex import *
+from typing import List
+from Graph import Graph
+from Vertex import Vertex
 
 
 class Production (ABC):
