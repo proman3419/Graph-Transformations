@@ -25,8 +25,8 @@ class Graph:
     def add_edge(self, label: str, vertex_from: Vertex, vertex_to: Vertex) -> Edge:
         edge = Edge(self.next_edge_index(), label, vertex_from.index, 
                     vertex_to.index)
-        self.edges[edge.index] = edge
+        self.edges[(vertex_from.index, vertex_to.index)] = edge
         return edge
 
     def __str__(self):
-        return self.edges.__str__() + self.vertices.__str__()
+        return self.edges.__str__() + '\n' + self.vertices.__str__() + '\n'
