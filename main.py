@@ -6,7 +6,7 @@ from P3 import P3
 
 if __name__ == '__main__':
     graph = Graph()
-    graph.add_vertex('Z')
+    graph.add_vertex('Z', {'source_type': 'apple'})
     P1.apply([graph.vertices[0]], graph)
     print(graph)
 
