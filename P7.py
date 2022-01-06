@@ -5,11 +5,11 @@ from Vertex import Vertex
 from Edge import Edge
 
 
-class P7 (Production):
+class P7(Production):
     @staticmethod
     def apply(vertices: List[Vertex], graph: Graph):
         if vertices[0].label == 'F':
-            new_vertex = graph.add_vertex('F', vertices[0].attributes)
+            new_vertex = graph.create_add_vertex('F', vertices[0].attributes)
 
             edges_to_del = []
             edges_to_add = []
@@ -36,9 +36,18 @@ class P7 (Production):
                     edges_to_del.append(edge)
             
             for edge in edges_to_del:
-                del graph.edges[(edge.vertex_from_index, edge.vertex_to_index)]
+                graph.remove_edge(edge)
 
             for edge in edges_to_add:
-                graph.edges[(edge.vertex_from_index, edge.vertex_to_index)] = edge
+                graph.add_edge(edge)
 
-            del graph.vertices[vertices[0].index]
+            graph.remove_vertex(vertices[0])
+
+    @staticmethod
+    def description() -> str:
+        return ('name: P7\n'
+                'L: (F)\n'
+                "P: (F) --d--> (F')\n"
+                """c: {((d, in, 0): (F', Z, d, in)),
+    ((d, out, 0): (F', P, d, out)),
+    CopyRest}\n""")
