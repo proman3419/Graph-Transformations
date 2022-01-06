@@ -2,6 +2,9 @@ from Graph import Graph
 from P1 import P1
 from P2 import P2
 from P3 import P3
+from P4 import P4
+from P5 import P5
+from P6 import P6
 from P7 import P7
 
 
@@ -31,4 +34,7 @@ if __name__ == '__main__':
     print(P1.description())
     print(P2.description())
     print(P3.description())
+    print(P4.description())
+    print(P5.description())
+    print(P6.description())
     print(P7.description())

@@ -16,3 +16,11 @@ class P6(Production):
                               graph.create_add_vertex('P'))
         graph.create_add_edge('d', graph.vertices[new_vertex_f_index], 
                               graph.create_add_vertex('P'))
+
+    @staticmethod
+    def description() -> str:
+        return ('name: P6\n'
+                'L: (Z)\n'
+                """P: (Z) --d--> (F) --d--> (P')
+               \\---d---> (P'')\n"""
+                'c: {CopyRest}\n')

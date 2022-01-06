@@ -11,3 +11,10 @@ class P4(Production):
         from_vertex = vertices[0]
         to_vertex = vertices[1]
         graph.create_add_edge('d', from_vertex, to_vertex)
+
+    @staticmethod
+    def description() -> str:
+        return ('name: P4\n'
+                'L: (Z)        (O)\n'
+                'P: (Z) --d--> (O)\n'
+                'c: {CopyRest}\n')
