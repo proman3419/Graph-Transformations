@@ -10,5 +10,12 @@ class P5(Production):
     def apply(vertices: List[Vertex], graph: Graph):
         for vertex in graph.vertices.values():
             if vertex.label == 'O':
-                graph.add_edge('d', vertices[0], vertex)
+                graph.create_add_edge('d', vertices[0], vertex)
                 break
+
+    @staticmethod
+    def description() -> str:
+        return ('name: P5\n'
+                'L: (P)\n'
+                'P: (P) --d--> (O)\n'
+                'c: {CopyRest}\n')
