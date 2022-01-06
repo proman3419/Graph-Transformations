@@ -12,4 +12,3 @@ class P5(Production):
             if vertex.label == 'O':
                 graph.add_edge('d', vertices[0], vertex)
                 break
-
