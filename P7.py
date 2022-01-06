@@ -2,7 +2,7 @@ from typing import List
 from Graph import Graph
 from Production import Production
 from Vertex import Vertex
-from copy import deepcopy
+from Edge import Edge
 
 
 class P7 (Production):
@@ -18,17 +18,17 @@ class P7 (Production):
 
                 if edge.label == 'd' and \
                    edge.vertex_to_index == vertices[0].index:
-                    edge_to_add = deepcopy(edge)
-                    edge_to_add.index = graph.next_edge_index()
-                    edge_to_add.vertex_to_index = new_vertex.index
+                    edge_to_add = Edge(graph.next_edge_index(), edge.label,
+                                       edge.vertex_from_index, new_vertex.index,
+                                       edge.attributes)
                     edges_to_add.append(edge_to_add)
                     edge_to_del_flag = True
 
                 if edge.label == 'd' and \
                    edge.vertex_from_index == vertices[0].index:
-                    edge_to_add = deepcopy(edge)
-                    edge_to_add.index = graph.next_edge_index()
-                    edge_to_add.vertex_from_index = new_vertex.index
+                    edge_to_add = Edge(graph.next_edge_index(), edge.label,
+                                       new_vertex.index, edge.vertex_to_index,
+                                       edge.attributes)
                     edges_to_add.append(edge_to_add)
                     edge_to_del_flag = True
 
