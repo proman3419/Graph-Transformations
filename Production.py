@@ -4,7 +4,7 @@ from Graph import Graph
 from Vertex import Vertex
 
 
-class Production (ABC):
+class Production(ABC):
     @staticmethod
     @abstractmethod
     def apply(vertices: List[Vertex], graph: Graph):

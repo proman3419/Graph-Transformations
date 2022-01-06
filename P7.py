@@ -5,7 +5,7 @@ from Vertex import Vertex
 from Edge import Edge
 
 
-class P7 (Production):
+class P7(Production):
     @staticmethod
     def apply(vertices: List[Vertex], graph: Graph):
         if vertices[0].label == 'F':
