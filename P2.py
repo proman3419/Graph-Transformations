@@ -11,3 +11,10 @@ class P2(Production):
         to_vertex = vertices[1]
         edge = graph.edges[(from_vertex.index, to_vertex.index)]
         graph.remove_edge(edge)
+
+    @staticmethod
+    def description() -> str:
+        return ('name: P2\n'
+                'L: ( ) -----> ( )\n'
+                'P: ( )        ( )\n'
+                'c: {CopyRest}\n')

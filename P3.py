@@ -13,3 +13,10 @@ class P3(Production):
         for vertex in graph.vertices.values():
             if vertex.label == 'Z':
                 graph.create_add_edge('d', vertex, new_vertex)
+
+    @staticmethod
+    def description() -> str:
+        return ('name: P3\n'
+                'L:\n'
+                'P:\n'
+                'c:\n')

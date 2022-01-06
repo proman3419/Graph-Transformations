@@ -9,3 +9,8 @@ class Production (ABC):
     @abstractmethod
     def apply(vertices: List[Vertex], graph: Graph):
         raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def description() -> str:
+        raise NotImplementedError

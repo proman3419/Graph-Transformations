@@ -27,3 +27,8 @@ if __name__ == '__main__':
     print(graph)
     P7.apply([graph.vertices[1]], graph)
     print(graph)
+
+    print(P1.description())
+    print(P2.description())
+    print(P3.description())
+    print(P7.description())
