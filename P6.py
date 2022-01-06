@@ -11,5 +11,5 @@ class P6(Production):
         new_vertex_f_index = len(graph.vertices)
         graph.add_vertex('F')
         graph.add_edge('d', vertices[0], graph.vertices[new_vertex_f_index])
-        graph.add_edge('', graph.vertices[new_vertex_f_index], graph.add_vertex('P'))
-        graph.add_edge('', graph.vertices[new_vertex_f_index], graph.add_vertex('P'))
+        graph.add_edge('d', graph.vertices[new_vertex_f_index], graph.add_vertex('P'))
+        graph.add_edge('d', graph.vertices[new_vertex_f_index], graph.add_vertex('P'))
