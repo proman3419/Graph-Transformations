@@ -1,6 +1,6 @@
 from bokeh.io import show
 from bokeh.layouts import column
-from bokeh.models import Button
+from bokeh.models import Button, Dropdown
 from bokeh.plotting import from_networkx
 import networkx as nx
 from bokeh.models.graphs import from_networkx
@@ -14,8 +14,6 @@ class Visualization:
     def __init__(self, graph):
         self.selected_nodes = []
         self.graph = self._convert_graph(graph)
-        self.button = Button(label="Click on the button",
-                             button_type="danger")
         self._create_buttons()
 
         self.plot = figure(width=800, height=600, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
@@ -39,7 +37,23 @@ class Visualization:
         self.plot.renderers.append(self.graph_renderer)
         taptool = self.plot.select(type=TapTool)
         self.plot.on_event(Tap, self.clicking_update)
-        self.layout = column(self.button, self.plot)
+        self.layout = column(self.dropdown, self.plot)
+
+    def _create_buttons(self):
+        self.menu = [("Production 1", "Production 1"), ("Production 2", "Production 2"),
+                     ("Production 3", "Production 3"), ("Production 4", "Production 4"),
+                     ("Production 5", "Production 5"),
+                     ("Production 6", "Production 6"), ("Production 7", "Production 7"),
+                     ("Production 8", "Production 8")]
+
+        # self.button = Button(label="Click on the button",
+        #                      button_type="danger")
+
+        self.dropdown = Dropdown(label="Productions", button_type="warning", menu=self.menu)
+        self.dropdown.on_click(self._dropdown_update)
+
+    def _dropdown_update(self, event):
+        self.dropdown.label = event.item
 
     def choose_node_outline_colors(self, nodes_clicked):
         outline_colors = []
@@ -56,11 +70,10 @@ class Visualization:
         nodes_clicked = list(map(str, nodes_clicked_ints))
         self.source.data['line_color'] = self.choose_node_outline_colors(nodes_clicked)
 
-    def cos(self):
+    def _update(self):
         self.graph.add_node(4)
         self.graph.add_edge(3, 4)
         self.graph.add_edge(4, 2)
-
         self.plot = figure(width=800, height=600, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
                            x_axis_location=None, y_axis_location=None, toolbar_location=None,
                            title="Graph Interaction Demo", background_fill_color="#efefef",
@@ -83,7 +96,6 @@ class Visualization:
         self.plot.renderers.append(self.graph_renderer)
         taptool = self.plot.select(type=TapTool)
         self.plot.on_event(Tap, self.clicking_update)
-        self.layout = column(self.button, self.plot)
         curdoc().clear()
         curdoc().add_root(self.layout)
 
@@ -100,9 +112,6 @@ class Visualization:
     def _add_info(self):
         index = []
         label = []
-
-    def _create_buttons(self):
-        self.button.on_click(self.cos)
 
     def run(self):
         curdoc().add_root(self.layout)
