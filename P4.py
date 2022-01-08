@@ -1,20 +1,20 @@
 from typing import List
+
 from Graph import Graph
 from Production import Production
 from Vertex import Vertex
 
 
-class P2(Production):
+class P4(Production):
     @staticmethod
     def apply(vertices: List[Vertex], graph: Graph):
         from_vertex = vertices[0]
         to_vertex = vertices[1]
-        edge = graph.edges[(from_vertex.index, to_vertex.index)]
-        graph.remove_edge(edge)
+        graph.create_add_edge('d', from_vertex, to_vertex)
 
     @staticmethod
     def description() -> str:
-        return ('name: P2\n'
-                'L: ( ) -----> ( )\n'
-                'P: ( )        ( )\n'
+        return ('name: P4\n'
+                'L: (Z)        (O)\n'
+                'P: (Z) --d--> (O)\n'
                 'c: {CopyRest}\n')
