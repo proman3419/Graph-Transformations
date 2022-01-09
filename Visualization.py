@@ -72,31 +72,17 @@ class Visualization:
         self.dropdown.label = event.item
         self.production_selected = self.production_classes_by_names.get(event.item)
         self.vertices_chosen.clear()
-        print(self.dropdown.label)
-        print(self.production_selected)
-        print(self.vertices_chosen)
 
     def clicking_update(self, event):
         node_clicked_list = self.source.selected.indices
-        print(node_clicked_list)
-        print(list(self.networkx_graph.nodes()))
-        print(self.graph.vertices)
         if node_clicked_list and self.production_selected:
             vertex_index = list(self.networkx_graph.nodes())[node_clicked_list[0]]
-            print('indeksik ', vertex_index)
             if vertex_index not in self.vertices_chosen:
                 self.vertices_chosen.append(vertex_index)
             if len(self.vertices_chosen) == self.production_selected.get_vertices_number():
                 self.apply_production()
 
     def apply_production(self):
-        print('============================')
-        print(self.vertices_chosen)
-        print(self.graph.vertices)
-        print(self.graph.edges)
-        print([self.graph.vertices[id] for id in self.vertices_chosen])
-        print("============================")
-        #TODO (2,3) is not proper, check 2 combinations
         self.production_selected.apply([self.graph.vertices[id] for id in self.vertices_chosen], self.graph)
         self.networkx_graph = self._convert_graph()
         self.production_selected = None
