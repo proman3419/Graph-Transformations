@@ -82,13 +82,20 @@ class Visualization:
         print(list(self.networkx_graph.nodes()))
         print(self.graph.vertices)
         if node_clicked_list and self.production_selected:
-            vertex_index = list(self.networkx_graph.nodes()).index(node_clicked_list[0])
+            vertex_index = list(self.networkx_graph.nodes())[node_clicked_list[0]]
             print('indeksik ', vertex_index)
             self.vertices_chosen.add(vertex_index)
             if len(self.vertices_chosen) == self.production_selected.get_vertices_number():
                 self.apply_production()
 
     def apply_production(self):
+        print('============================')
+        print(self.vertices_chosen)
+        print(self.graph.vertices)
+        print(self.graph.edges)
+        print([self.graph.vertices[id] for id in self.vertices_chosen])
+        print("============================")
+        #TODO (2,3) is not proper, check 2 combinations
         self.production_selected.apply([self.graph.vertices[id] for id in self.vertices_chosen], self.graph)
         self.networkx_graph = self._convert_graph()
         self.production_selected = None
@@ -97,8 +104,7 @@ class Visualization:
 
         self.plot = figure(width=800, height=600, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
                            x_axis_location=None, y_axis_location=None, toolbar_location=None,
-                           title="Graph Interaction Demo", background_fill_color="#efefef",
-                           tooltips="index: @index, label: @label")
+                           title="Graph Interaction Demo", background_fill_color="#efefef")
         self.plot.grid.grid_line_color = None
         self.graph_renderer = from_networkx(self.networkx_graph, nx.spring_layout, scale=1, center=(0, 0))
         self.source = self.graph_renderer.node_renderer.data_source
