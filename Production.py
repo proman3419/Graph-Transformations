@@ -6,6 +6,10 @@ from Vertex import Vertex
 
 class Production(ABC):
     @staticmethod
+    def get_vertices_number() -> int:
+        return 1
+
+    @staticmethod
     @abstractmethod
     def apply(vertices: List[Vertex], graph: Graph):
         raise NotImplementedError
