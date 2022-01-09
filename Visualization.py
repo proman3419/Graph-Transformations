@@ -29,7 +29,7 @@ class Visualization:
         "Production 8": None,
     }
     production_selected = None
-    vertices_chosen = set()
+    vertices_chosen = list()
 
     def __init__(self, graph):
         self.selected_nodes = []
@@ -84,7 +84,8 @@ class Visualization:
         if node_clicked_list and self.production_selected:
             vertex_index = list(self.networkx_graph.nodes())[node_clicked_list[0]]
             print('indeksik ', vertex_index)
-            self.vertices_chosen.add(vertex_index)
+            if vertex_index not in self.vertices_chosen:
+                self.vertices_chosen.append(vertex_index)
             if len(self.vertices_chosen) == self.production_selected.get_vertices_number():
                 self.apply_production()
 
