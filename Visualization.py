@@ -44,11 +44,11 @@ class Visualization:
         self.graph_renderer = from_networkx(self.networkx_graph, nx.spring_layout, scale=1, center=(0, 0))
 
         self.source = self.graph_renderer.node_renderer.data_source
+        self._create_colors()
 
-        self.graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="blue")
+        self.graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="colors")
         self.graph_renderer.edge_renderer.glyph = MultiLine(line_color="black",
                                                             line_alpha=0.8, line_width=1.5)
-
         TOOLTIPS = [
             ("Index", "@index"),
         ]
@@ -58,6 +58,14 @@ class Visualization:
         taptool = self.plot.select(type=TapTool)
         self.plot.on_event(Tap, self.clicking_update)
         self.layout = column(self.dropdown, self.plot)
+
+    def _create_colors(self):
+        colors = []
+        self.source.data['index'] = list(self.graph.vertices[v].index for v in self.graph.vertices)
+        for v in self.graph.vertices:
+            colors.append(self.graph.vertices[v].to_color())
+
+        self.source.data['colors'] = colors
 
     def _create_buttons(self):
         self.menu = [("Production 1", "Production 1"), ("Production 2", "Production 2"),
@@ -95,7 +103,8 @@ class Visualization:
         self.plot.grid.grid_line_color = None
         self.graph_renderer = from_networkx(self.networkx_graph, nx.spring_layout, scale=1, center=(0, 0))
         self.source = self.graph_renderer.node_renderer.data_source
-        self.graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="blue")
+        self._create_colors()
+        self.graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="colors")
         self.graph_renderer.edge_renderer.glyph = MultiLine(line_color="black",
                                                             line_alpha=0.8, line_width=1.5)
 
@@ -110,7 +119,6 @@ class Visualization:
         self.plot.on_event(Tap, self.clicking_update)
         curdoc().clear()
         curdoc().add_root(self.layout)
-
 
     def _convert_graph(self):
         new_graph = nx.Graph()
