@@ -21,6 +21,6 @@ class P6(Production):
     def description() -> str:
         return ('name: P6\n'
                 'L: (Z)\n'
-                """P: (Z) --d--> (F) --d--> (P')
-               \\---d---> (P'')\n"""
+                """P: (Z) --d--> (F) --d--> (P)
+               \\---d---> (P)\n"""
                 'c: {CopyRest}\n')
