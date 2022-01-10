@@ -50,5 +50,5 @@ class P7(Production):
                 "P: (F) --d--> (F')\n"
                 """c: {((d, in, 0): (F', Z, d, in)),
     ((d, out, 0): (F', P, d, out)),
-    CopyRest}\n
-    where ' is used for temporary indexing only""")
+    CopyRest}\n"""
+    "where ' is used for temporary indexing only\n")
