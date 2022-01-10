@@ -6,6 +6,7 @@ from P4 import P4
 from P5 import P5
 from P6 import P6
 from P7 import P7
+from P8 import P8
 
 
 if __name__ == '__main__':
@@ -30,6 +31,8 @@ if __name__ == '__main__':
     print(graph)
     P7.apply([graph.vertices[1]], graph)
     print(graph)
+    P8.apply([graph.vertices[3]], graph)
+    print(graph)
 
     print(P1.description())
     print(P2.description())
@@ -38,3 +41,4 @@ if __name__ == '__main__':
     print(P5.description())
     print(P6.description())
     print(P7.description())
+    print(P8.description())
