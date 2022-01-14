@@ -1,9 +1,8 @@
 from bokeh.io import show
 from bokeh.layouts import column
-from bokeh.models import Button, Dropdown
+from bokeh.models import Dropdown
 from bokeh.plotting import from_networkx
 import networkx as nx
-from bokeh.models.graphs import from_networkx
 from bokeh.models import MultiLine, Circle, TapTool, HoverTool, BoxSelectTool
 from bokeh.plotting import figure
 from bokeh.io import curdoc
@@ -30,33 +29,16 @@ class Visualization:
     }
     production_selected = None
     vertices_chosen = list()
+    source = None
+    networkx_graph = None
+    graph_renderer = None
+    plot = None
 
     def __init__(self, graph):
-        self.selected_nodes = []
         self.graph = graph
-        self.networkx_graph = self._convert_graph()
         self._create_buttons()
-
-        self.plot = figure(width=800, height=600, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
-                           x_axis_location=None, y_axis_location=None, toolbar_location=None,
-                           title="Graph Interaction Demo", background_fill_color="#efefef")
-        self.plot.grid.grid_line_color = None
-        self.graph_renderer = from_networkx(self.networkx_graph, nx.spring_layout, scale=1, center=(0, 0))
-
-        self.source = self.graph_renderer.node_renderer.data_source
-        self._create_colors()
-
-        self.graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="colors")
-        self.graph_renderer.edge_renderer.glyph = MultiLine(line_color="black",
-                                                            line_alpha=0.8, line_width=1.5)
-        TOOLTIPS = [
-            ("Index", "@index"),
-        ]
-
-        self.plot.add_tools(HoverTool(tooltips=TOOLTIPS), TapTool(), BoxSelectTool())
-        self.plot.renderers.append(self.graph_renderer)
-        taptool = self.plot.select(type=TapTool)
-        self.plot.on_event(Tap, self.clicking_update)
+        self.graph_initialization()
+        self.set_hover_tool_and_click_event()
         self.layout = column(self.dropdown, self.plot)
 
     def _create_colors(self):
@@ -66,6 +48,15 @@ class Visualization:
             colors.append(self.graph.vertices[v].to_color())
 
         self.source.data['colors'] = colors
+
+    def _create_edges_to_lists(self):
+        edges_to = [[] for _ in self.graph.vertices]
+        vertices_indexes = self.source.data['index']
+        for edge_tuple in self.graph.edges:
+            vertex_from, vertex_to = edge_tuple
+            edges_to[vertices_indexes.index(vertex_from)].append(vertex_to)
+
+        self.source.data['edges_to'] = edges_to
 
     def _create_buttons(self):
         self.menu = [("Production 1", "Production 1"), ("Production 2", "Production 2"),
@@ -91,12 +82,30 @@ class Visualization:
                 self.apply_production()
 
     def apply_production(self):
-        self.production_selected.apply([self.graph.vertices[id] for id in self.vertices_chosen], self.graph)
-        self.networkx_graph = self._convert_graph()
+        self.production_selected.apply([self.graph.vertices[i] for i in self.vertices_chosen], self.graph)
         self.production_selected = None
         self.vertices_chosen.clear()
         self.dropdown.label = "Productions"
 
+        self.graph_initialization()
+        self.layout.children[1] = self.plot
+
+        self.set_hover_tool_and_click_event()
+        curdoc().clear()
+        curdoc().add_root(self.layout)
+
+    def set_hover_tool_and_click_event(self):
+        tooltips = [
+            ("Index", "@index"),
+            ("Edges to", "@edges_to")
+        ]
+        self.plot.add_tools(HoverTool(tooltips=tooltips), TapTool(), BoxSelectTool())
+        self.plot.renderers.append(self.graph_renderer)
+        self.plot.select(type=TapTool)
+        self.plot.on_event(Tap, self.clicking_update)
+
+    def graph_initialization(self):
+        self.networkx_graph = self._convert_graph()
         self.plot = figure(width=800, height=600, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
                            x_axis_location=None, y_axis_location=None, toolbar_location=None,
                            title="Graph Interaction Demo", background_fill_color="#efefef")
@@ -104,21 +113,10 @@ class Visualization:
         self.graph_renderer = from_networkx(self.networkx_graph, nx.spring_layout, scale=1, center=(0, 0))
         self.source = self.graph_renderer.node_renderer.data_source
         self._create_colors()
+        self._create_edges_to_lists()
         self.graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="colors")
         self.graph_renderer.edge_renderer.glyph = MultiLine(line_color="black",
                                                             line_alpha=0.8, line_width=1.5)
-
-        self.layout.children[1] = self.plot
-        TOOLTIPS = [
-            ("Index", "@index"),
-        ]
-
-        self.plot.add_tools(HoverTool(tooltips=TOOLTIPS), TapTool(), BoxSelectTool())
-        self.plot.renderers.append(self.graph_renderer)
-        taptool = self.plot.select(type=TapTool)
-        self.plot.on_event(Tap, self.clicking_update)
-        curdoc().clear()
-        curdoc().add_root(self.layout)
 
     def _convert_graph(self):
         new_graph = nx.Graph()
