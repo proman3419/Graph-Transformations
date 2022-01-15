@@ -7,6 +7,10 @@ from Vertex import Vertex
 
 class P4(Production):
     @staticmethod
+    def get_vertices_number() -> int:
+        return 2
+
+    @staticmethod
     def apply(vertices: List[Vertex], graph: Graph):
         from_vertex = vertices[0]
         to_vertex = vertices[1]
