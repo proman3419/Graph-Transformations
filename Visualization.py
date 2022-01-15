@@ -14,6 +14,7 @@ from P4 import P4
 from P5 import P5
 from P6 import P6
 from P7 import P7
+from P8 import P8
 
 
 class Visualization:
@@ -25,7 +26,7 @@ class Visualization:
         "Production 5": P5,
         "Production 6": P6,
         "Production 7": P7,
-        "Production 8": None,
+        "Production 8": P8,
     }
     production_selected = None
     vertices_chosen = list()

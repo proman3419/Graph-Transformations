@@ -7,6 +7,7 @@ from P4 import P4
 from P5 import P5
 from P6 import P6
 from P7 import P7
+from P8 import P8
 
 #if __name__ == '__main__':
 graph = Graph()
