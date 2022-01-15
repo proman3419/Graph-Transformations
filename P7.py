@@ -52,3 +52,7 @@ class P7(Production):
     ((d, out, 0): (F', P, d, out)),
     CopyRest}\n"""
     "where ' is used for temporary indexing only\n")
+
+    @staticmethod
+    def to_string():
+        return "P7"

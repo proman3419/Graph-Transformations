@@ -22,3 +22,7 @@ class P2(Production):
                 'L: ( ) -----> ( )\n'
                 'P: ( )        ( )\n'
                 'c: {CopyRest}\n')
+
+    @staticmethod
+    def to_string():
+        return "P2"
