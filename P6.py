@@ -24,3 +24,7 @@ class P6(Production):
                 """P: (Z) --d--> (F) --d--> (P)
                \\---d---> (P)\n"""
                 'c: {CopyRest}\n')
+
+    @staticmethod
+    def to_string():
+        return "P6"

@@ -22,3 +22,7 @@ class P4(Production):
                 'L: (Z)        (O)\n'
                 'P: (Z) --d--> (O)\n'
                 'c: {CopyRest}\n')
+
+    @staticmethod
+    def to_string():
+        return "P4"

@@ -18,3 +18,8 @@ class Production(ABC):
     @abstractmethod
     def description() -> str:
         raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def to_string() -> str:
+        raise NotImplementedError

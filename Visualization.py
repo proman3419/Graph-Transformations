@@ -1,12 +1,13 @@
 from bokeh.io import show
-from bokeh.layouts import column
-from bokeh.models import Dropdown
+from bokeh.layouts import column, row
+from bokeh.models import Dropdown, Div, Legend, LegendItem
 from bokeh.plotting import from_networkx
 import networkx as nx
 from bokeh.models import MultiLine, Circle, TapTool, HoverTool, BoxSelectTool
 from bokeh.plotting import figure
 from bokeh.io import curdoc
 from bokeh.events import Tap
+
 from P1 import P1
 from P2 import P2
 from P3 import P3
@@ -16,6 +17,8 @@ from P6 import P6
 from P7 import P7
 from P8 import P8
 
+#TODO
+#usuwac image po kliknieciu produkcji
 
 class Visualization:
     production_classes_by_names = {
@@ -44,11 +47,14 @@ class Visualization:
 
     def _create_colors(self):
         colors = []
+        labels = []
         self.source.data['index'] = list(self.graph.vertices[v].index for v in self.graph.vertices)
         for v in self.graph.vertices:
             colors.append(self.graph.vertices[v].to_color())
+            labels.append(self.graph.vertices[v].label)
 
         self.source.data['colors'] = colors
+        self.source.data['labels'] = labels
 
     def _create_edges_to_lists(self):
         edges_to = [[] for _ in self.graph.vertices]
@@ -68,8 +74,20 @@ class Visualization:
         self.dropdown = Dropdown(label="Productions", button_type="warning", menu=self.menu)
         self.dropdown.on_click(self._dropdown_update)
 
+    def _create_image(self, production):
+        for element in self.layout.children:
+            if type(element) == Div:
+                self.layout.children.remove(element)
+
+        div_image = Div(text=f"<img src='Graph-Transformations/static/images/"
+                             f"{self.production_classes_by_names[production].to_string()}.jpg' width='540' height='auto'>")
+        self.layout = row(self.layout, div_image)
+        curdoc().clear()
+        curdoc().add_root(self.layout)
+
     def _dropdown_update(self, event):
         self.dropdown.label = event.item
+        self._create_image(event.item)
         self.production_selected = self.production_classes_by_names.get(event.item)
         self.vertices_chosen.clear()
 
@@ -89,7 +107,7 @@ class Visualization:
         self.dropdown.label = "Productions"
 
         self.graph_initialization()
-        self.layout.children[1] = self.plot
+        self.layout.children[0] = column(self.dropdown, self.plot)
 
         self.set_hover_tool_and_click_event()
         curdoc().clear()
@@ -98,7 +116,8 @@ class Visualization:
     def set_hover_tool_and_click_event(self):
         tooltips = [
             ("Index", "@index"),
-            ("Edges to", "@edges_to")
+            ("Edges to", "@edges_to"),
+            ("Label", "@labels")
         ]
         self.plot.add_tools(HoverTool(tooltips=tooltips), TapTool(), BoxSelectTool())
         self.plot.renderers.append(self.graph_renderer)
@@ -109,7 +128,7 @@ class Visualization:
         self.networkx_graph = self._convert_graph()
         self.plot = figure(width=800, height=600, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
                            x_axis_location=None, y_axis_location=None, toolbar_location=None,
-                           title="Graph Interaction Demo", background_fill_color="#efefef")
+                           title="Graph Transformations", background_fill_color="#efefef")
         self.plot.grid.grid_line_color = None
         self.graph_renderer = from_networkx(self.networkx_graph, nx.spring_layout, scale=1, center=(0, 0))
         self.source = self.graph_renderer.node_renderer.data_source
