@@ -17,8 +17,8 @@ from P6 import P6
 from P7 import P7
 from P8 import P8
 
-#TODO
-#usuwac image po kliknieciu produkcji
+
+# TODO usuwac image po kliknieciu produkcji
 
 class Visualization:
     production_classes_by_names = {
@@ -81,8 +81,8 @@ class Visualization:
                 self.layout.children.remove(element)
 
         div_image = Div(text=f"<img src='Graph-Transformations/static/images/"
-                             f"{self.production_classes_by_names[production].to_string()}.jpg' width='540' height='auto'>"
-                        ,name="production", margin=(5,5,5,-100))
+                             f"{self.production_classes_by_names[production].to_string()}.jpg' width='540' height='auto'>",
+                        name="production", margin=(5, 5, 5, -100))
 
         self.layout = row(self.layout, div_image)
 
@@ -91,7 +91,7 @@ class Visualization:
 
     @staticmethod
     def _create_legend():
-        return Div(text=f"<img src='Graph-Transformations/static/images/legend.jpg'>",margin=(200,5,5,5))
+        return Div(text=f"<img src='Graph-Transformations/static/images/legend.jpg'>", margin=(200, 5, 5, 5))
 
     def _dropdown_update(self, event):
         self.dropdown.label = event.item
@@ -149,9 +149,11 @@ class Visualization:
     def _convert_graph(self):
         new_graph = nx.Graph()
 
-        for vertex in self.graph.edges:
-            new_graph.add_node(vertex[0])
-            new_graph.add_edge(vertex[0], vertex[1])
+        for vertex in self.graph.vertices:
+            new_graph.add_node(vertex)
+
+        for edge in self.graph.edges:
+            new_graph.add_edge(edge[0], edge[1])
 
         return new_graph
 
