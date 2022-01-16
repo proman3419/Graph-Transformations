@@ -41,8 +41,8 @@ class Visualization:
     def __init__(self, graph):
         self.graph = graph
         self._create_buttons()
-        self.graph_initialization()
-        self.set_hover_tool_and_click_event()
+        self._graph_initialization()
+        self._set_hover_tool_and_click_event()
         self.layout = column(self.dropdown, self.plot)
         self.layout = row(self.layout, self._create_legend())
 
@@ -89,7 +89,8 @@ class Visualization:
         curdoc().clear()
         curdoc().add_root(self.layout)
 
-    def _create_legend(self):
+    @staticmethod
+    def _create_legend():
         return Div(text=f"<img src='Graph-Transformations/static/images/legend.jpg'>",margin=(200,5,5,5))
 
     def _dropdown_update(self, event):
@@ -98,31 +99,29 @@ class Visualization:
         self.production_selected = self.production_classes_by_names.get(event.item)
         self.vertices_chosen.clear()
 
-    def clicking_update(self, event):
+    def _clicking_update(self, event):
         node_clicked_list = self.source.selected.indices
-        print('NODES SELECTED')
-        print(node_clicked_list)
         if node_clicked_list and self.production_selected:
             vertex_index = node_clicked_list[0]
             if vertex_index not in self.vertices_chosen:
                 self.vertices_chosen.append(vertex_index)
             if len(self.vertices_chosen) == self.production_selected.get_vertices_number():
-                self.apply_production()
+                self._apply_production()
 
-    def apply_production(self):
+    def _apply_production(self):
         self.production_selected.apply([self.graph.vertices[i] for i in self.vertices_chosen], self.graph)
         self.production_selected = None
         self.vertices_chosen.clear()
         self.dropdown.label = "Productions"
 
-        self.graph_initialization()
-        self.layout.children[0] = column(self.dropdown, self.plot)
+        self._graph_initialization()
+        self.layout.children[0] = row(column(self.dropdown, self.plot), self._create_legend())
 
-        self.set_hover_tool_and_click_event()
+        self._set_hover_tool_and_click_event()
         curdoc().clear()
         curdoc().add_root(self.layout)
 
-    def set_hover_tool_and_click_event(self):
+    def _set_hover_tool_and_click_event(self):
         tooltips = [
             ("Index", "@index"),
             ("Edges to", "@edges_to"),
@@ -131,9 +130,9 @@ class Visualization:
         self.plot.add_tools(HoverTool(tooltips=tooltips), TapTool(), BoxSelectTool())
         self.plot.renderers.append(self.graph_renderer)
         self.plot.select(type=TapTool)
-        self.plot.on_event(Tap, self.clicking_update)
+        self.plot.on_event(Tap, self._clicking_update)
 
-    def graph_initialization(self):
+    def _graph_initialization(self):
         self.networkx_graph = self._convert_graph()
         self.plot = figure(width=800, height=600, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
                            x_axis_location=None, y_axis_location=None, toolbar_location=None,
