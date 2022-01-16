@@ -100,8 +100,10 @@ class Visualization:
 
     def clicking_update(self, event):
         node_clicked_list = self.source.selected.indices
+        print('NODES SELECTED')
+        print(node_clicked_list)
         if node_clicked_list and self.production_selected:
-            vertex_index = list(self.networkx_graph.nodes())[node_clicked_list[0]]
+            vertex_index = node_clicked_list[0]
             if vertex_index not in self.vertices_chosen:
                 self.vertices_chosen.append(vertex_index)
             if len(self.vertices_chosen) == self.production_selected.get_vertices_number():
