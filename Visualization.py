@@ -44,6 +44,7 @@ class Visualization:
         self.graph_initialization()
         self.set_hover_tool_and_click_event()
         self.layout = column(self.dropdown, self.plot)
+        self.layout = row(self.layout, self._create_legend())
 
     def _create_colors(self):
         colors = []
@@ -76,14 +77,20 @@ class Visualization:
 
     def _create_image(self, production):
         for element in self.layout.children:
-            if type(element) == Div:
+            if element.name == "production":
                 self.layout.children.remove(element)
 
         div_image = Div(text=f"<img src='Graph-Transformations/static/images/"
-                             f"{self.production_classes_by_names[production].to_string()}.jpg' width='540' height='auto'>")
+                             f"{self.production_classes_by_names[production].to_string()}.jpg' width='540' height='auto'>"
+                        ,name="production", margin=(5,5,5,-100))
+
         self.layout = row(self.layout, div_image)
+
         curdoc().clear()
         curdoc().add_root(self.layout)
+
+    def _create_legend(self):
+        return Div(text=f"<img src='Graph-Transformations/static/images/legend.jpg'>",margin=(200,5,5,5))
 
     def _dropdown_update(self, event):
         self.dropdown.label = event.item
