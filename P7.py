@@ -45,7 +45,7 @@ class P7(Production):
     def description() -> str:
         return ('name: P7\n'
                 'L: (F)\n'
-                "P: (F) --d--> (F) (F')\n"
+                "P: (F) (F')\n"
                 """c: {((d, in, 0): (F', Z, d, in)),
     ((d, out, 0): (F', P, d, out)),
     CopyRest}\n"""
