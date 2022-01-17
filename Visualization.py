@@ -75,10 +75,13 @@ class Visualization:
         self.dropdown = Dropdown(label="Productions", button_type="warning", menu=self.menu)
         self.dropdown.on_click(self._dropdown_update)
 
-    def _create_image(self, production):
+    def _remove_image(self):
         for element in self.layout.children:
             if element.name == "production":
                 self.layout.children.remove(element)
+
+    def _create_image(self, production):
+        self._remove_image()
 
         div_image = Div(text=f"<img src='Graph-Transformations/static/images/"
                              f"{self.production_classes_by_names[production].to_string()}.jpg' width='540' height='auto'>"
@@ -115,7 +118,9 @@ class Visualization:
         self.dropdown.label = "Productions"
 
         self._graph_initialization()
+
         self.layout.children[0] = row(column(self.dropdown, self.plot), self._create_legend())
+        self._remove_image()
 
         self._set_hover_tool_and_click_event()
         curdoc().clear()
