@@ -30,10 +30,10 @@ class P8(Production):
     def description() -> str:
         return ('name: P8\n'
                 'L: (F)\n'
-                "P: (F) --d--> (F)\n"
+                "P: (F) --d--> (F')\n"
                 "    \\---<-d---/\n"
-                """c: {((d, in, 0): (F, Z, d, in)),
-    ((d, out, 0): (F, P, d, out)),
+                """c: {((d, in, 0): (F', Z, d, in)),
+    ((d, out, 0): (F', P, d, out)),
     CopyRest}\n"""
     "where ' is used for temporary indexing only\n")
 
