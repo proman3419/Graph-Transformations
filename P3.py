@@ -7,8 +7,9 @@ from Vertex import Vertex
 class P3(Production):
     @staticmethod
     def apply(vertices: List[Vertex], graph: Graph):
-        new_vertex = graph.create_add_vertex('P')
-        graph.create_add_edge('d', vertices[0], new_vertex)
+        if vertices[0] == 'L':
+            new_vertex = graph.create_add_vertex('P')
+            graph.create_add_edge('d', vertices[0], new_vertex)
 
     @staticmethod
     def description() -> str:

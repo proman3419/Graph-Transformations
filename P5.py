@@ -8,10 +8,11 @@ from Vertex import Vertex
 class P5(Production):
     @staticmethod
     def apply(vertices: List[Vertex], graph: Graph):
-        for vertex in graph.vertices.values():
-            if vertex.label == 'O':
-                graph.create_add_edge('d', vertices[0], vertex)
-                break
+        if vertices[0] == 'P':
+            for vertex in graph.vertices.values():
+                if vertex.label == 'O':
+                    graph.create_add_edge('d', vertices[0], vertex)
+                    break
 
     @staticmethod
     def description() -> str:
