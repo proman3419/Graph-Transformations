@@ -1,6 +1,5 @@
 # Graph-Transformations
-##Run script command
-* bokeh serve --show .  
-* python -m bokeh serve --show . 
-* py -m bokeh serve --show .  
-* python3 -m bokeh serve --show .
+### [Documentation (in polish)](placeholder)
+
+## Demo
+![Demo](https://github.com/proman3419/Graph-Transformations/blob/master/graph_transformations.gif)
