@@ -1,5 +1,4 @@
 from typing import List
-
 from Graph import Graph
 from Production import Production
 from Vertex import Vertex
