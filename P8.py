@@ -14,12 +14,12 @@ class P8(Production):
             left_vertex = vertices[0]
 
             temp_edges = []
-            for k, v in graph.edges.items():
-                if k[1] == left_vertex.index and v.label == 'd':
-                    temp_edges.append(Edge(graph.next_edge_index(), 'd', v.vertex_from_index, new_vertex_f_index, {}))
+            for key, edge in graph.edges.items():
+                if key[1] == left_vertex.index and edge.label == 'd':
+                    temp_edges.append(Edge(graph.next_edge_index(), 'd', edge.vertex_from_index, new_vertex_f_index, {}))
 
-                if k[0] == left_vertex.index and v.label == 'd':
-                    temp_edges.append(Edge(len(graph.edges) + len(temp_edges), 'd', new_vertex_f_index, v.vertex_to_index, {}))
+                if key[0] == left_vertex.index and edge.label == 'd':
+                    temp_edges.append(Edge(graph.next_edge_index(), 'd', new_vertex_f_index, edge.vertex_to_index, {}))
 
             for edge in temp_edges: graph.add_edge(edge)
 
@@ -28,10 +28,15 @@ class P8(Production):
 
     @staticmethod
     def description() -> str:
-        return ('name: P7\n'
+        return ('name: P8\n'
                 'L: (F)\n'
-                "P: (F) --d--> (F)\n"
-                "    \\--<-d---/"
-                """c: {((d, in, 0): (F, Z, d, in)),
-    ((d, out, 0): (F, P, d, out)),
-    CopyRest}\n""")
+                "P: (F) --d--> (F')\n"
+                "    \\---<-d---/\n"
+                """c: {((d, in, 0): (F', Z, d, in)),
+    ((d, out, 0): (F', P, d, out)),
+    CopyRest}\n"""
+    "where ' is used for temporary indexing only\n")
+
+    @staticmethod
+    def to_string():
+        return "P8"
